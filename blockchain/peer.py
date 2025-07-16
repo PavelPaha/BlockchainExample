@@ -20,8 +20,8 @@ logger = logging.getLogger('blockchain')
 
 
 class BlockchainPeer:
-    # difficulty of our PoW algorithm
-    difficulty = 2
+    difficulty = 2  # difficulty of our PoW algorithm
+    has_difficulty_bomb: bool = False  # whether the peer has a difficulty bomb or not
 
     def __init__(self, peer_name: str):
         self.peer_name: str = peer_name
@@ -78,8 +78,8 @@ class BlockchainPeer:
         self.chain.append(block)
         logging.info(f"{self.peer_name} | Added block {block}")
 
-    @staticmethod
-    def proof_of_work(block: Block) -> str:
+    @classmethod
+    def proof_of_work(cls, block: Block) -> str:
         """
         Function that tries different values of nonce to get a hash
         that satisfies our difficulty criteria.
@@ -96,7 +96,8 @@ class BlockchainPeer:
             block.nonce += 1
             computed_hash = block.compute_hash()
             # difficulty bomb
-            time.sleep(random.randint(0, 10) / 100)
+            if cls.has_difficulty_bomb:
+                time.sleep(random.randint(0, 10) / 100)
         return computed_hash
 
     def add_new_transaction(self, transaction: Transaction):
