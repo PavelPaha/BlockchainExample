@@ -121,9 +121,7 @@ class BlockchainPeer:
                 'peers': List[str] - list of peers names
             }
         """
-        chain_data = []
-        for block in self.chain:
-            chain_data.append(block)
+        chain_data = deepcopy(self.chain)
 
         return {
             "length": len(chain_data),

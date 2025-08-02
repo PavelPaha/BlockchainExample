@@ -73,7 +73,7 @@ class BlockchainMainnet:
         for task in set(tasks):
             task.start()
 
-        while True and self.the_longest_chain is None:
+        while not self.the_longest_chain:
             for task in set(tasks):
                 if not task.is_alive(): # the first peer that finishes mining will announce the new block to the network
                     time.sleep(1)       # wait for the file to be written (announced)

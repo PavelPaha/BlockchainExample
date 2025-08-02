@@ -45,7 +45,7 @@ A lightweight, educational blockchain simulation written in Python. This project
        tx3 = Transaction('Alice', 'Charlie', 200)
    
        peers = [BlockchainPeer(f'Peer{i}') for i in range(3)]
-       mainnet = BlockchainMainnet(peers)
+       blockchain = BlockchainMainnet(peers)
    
        for _ in range(3):
            peers[0].add_new_transaction(tx1)
